@@ -10,25 +10,68 @@ import XCTest
 @testable import Assignment
 
 class AssignmentTests: XCTestCase {
+    
+    var httpClient: HttpClient!
+    var session: URLSessionProtocol?
+    var listControllerUnderTest: PhotosViewController?
 
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        session = MockURLSession()
+        let viewModel = PhotosViewModel(delegate: self)
+        viewModel.session = session
+    }
+    
+    func testCallPhotoList() {
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+        httpClient = HttpClient(session: session)
+        let exception = expectation(description: "Status code: 200")
+        httpClient.get(url: URL(string: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Constants.apiKey)&format=json&nojsoncallback=1&text=kitten&extras=url_o&per_page=60&page=1")!) { (data, response, error) in
+            // Check for error
+            if let error = error {
+                XCTFail("Error: \(error.localizedDescription)")
+                return
+            } else if let statusCode = (response as? HTTPURLResponse)?.statusCode {
+                if statusCode == 200 {
+                    guard let data = data else {
+                        return
+                    }
+                    
+                    XCTAssertNotNil(data)
+                    do {
+                        //create json object from data
+                        if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
+                            print(json)
+                            exception.fulfill()
+                        }
+                    } catch let error {
+                        print(error.localizedDescription)
+                    }
+                } else {
+                    XCTFail("Status code error")
+                }
+                // Assert for data available...
+                
+            } else {
+                XCTFail("Invalid Status code")
+            }
+        }
+        wait(for: [exception], timeout: 15)
+        
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        session = nil
+        listControllerUnderTest = nil
     }
+}
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+extension AssignmentTests: PhotosViewModelDelegate {
+    func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?) {
+        XCTAssert(true, "Success")
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func onFetchFailed(with reason: String) {
+         XCTFail("Unable to fetch")
     }
-
 }
