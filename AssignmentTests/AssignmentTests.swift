@@ -14,12 +14,19 @@ class AssignmentTests: XCTestCase {
     var httpClient: HttpClient!
     var session: URLSessionProtocol?
     var listControllerUnderTest: PhotosViewController?
+    var viewModel: PhotosViewModel?
 
     override func setUp() {
         session = MockURLSession()
         let viewModel = PhotosViewModel(delegate: self)
         viewModel.session = session
     }
+    
+    func test_FetchPhotoCount() {
+        viewModel?.fetchedPhotoUrl = []
+        XCTAssertNil(viewModel?.total)
+    }
+    
     
     func testCallPhotoList() {
         let session = URLSession(configuration: URLSessionConfiguration.default)
@@ -39,8 +46,8 @@ class AssignmentTests: XCTestCase {
                     XCTAssertNotNil(data)
                     do {
                         //create json object from data
-                        if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                            print(json)
+                        if let _ = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
+
                             exception.fulfill()
                         }
                     } catch let error {
