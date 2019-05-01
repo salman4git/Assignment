@@ -3,12 +3,13 @@
 import UIKit
 
 class PhotoSearchViewController: UIViewController {
-  private enum SegueIdentifiers {
-    static let list = "ListViewController"
-  }
   
   @IBOutlet var siteTextField: UITextField!
   @IBOutlet var searchButton: UIButton!
+    
+    private enum SegueIdentifiers {
+        static let list = "ListViewController"
+    }
   
   private var behavior: ButtonEnablingBehavior!
   

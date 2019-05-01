@@ -1,3 +1,10 @@
+//
+//  ColorPalette.swift
+//  Assignment
+//
+//  Created by Salman on 27/04/19.
+//  Copyright © 2019 Salman. All rights reserved.
+//
 
 import Foundation
 import UIKit

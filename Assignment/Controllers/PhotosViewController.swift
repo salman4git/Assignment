@@ -9,6 +9,7 @@
 import UIKit
 
 class PhotosViewController: UIViewController {
+    // MARK: - IBOutlets
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -26,11 +27,10 @@ class PhotosViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension PhotosViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    //MARK: UICollectionViewDataSource
-    
-
+    // MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.total
     }
@@ -47,7 +47,7 @@ extension PhotosViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
-
+// MARK: - UICollectionViewDelegateFlowLayout
 extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let noOfCellsInRow = 3
@@ -63,11 +63,11 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 5.0
+        return 10.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5.0
+        return 10.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -75,6 +75,7 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - UICollectionViewDataSourcePrefetching
 extension PhotosViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         if indexPaths.contains(where: isLoadingCell) {

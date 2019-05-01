@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/// Protocol ViewModel
 protocol PhotosViewModelDelegate: class {
     func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?)
     func onFetchFailed(with reason: String)

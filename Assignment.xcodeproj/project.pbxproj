@@ -110,6 +110,14 @@
 			path = Behaviour;
 			sourceTree = "<group>";
 		};
+		2203E85C22797C4600423E3C /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				22E9456C22747407000EAE13 /* Box.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		2204726422744365006B3206 = {
 			isa = PBXGroup;
 			children = (
@@ -133,8 +141,8 @@
 		2204726F22744365006B3206 /* Assignment */ = {
 			isa = PBXGroup;
 			children = (
+				2203E85C22797C4600423E3C /* Helper */,
 				220193162275B52F00971309 /* Behaviour */,
-				22E9456C22747407000EAE13 /* Box.swift */,
 				22E9456922746F07000EAE13 /* Cell */,
 				22E9456422746DB7000EAE13 /* Extensions */,
 				220472A222744DF5006B3206 /* Constants */,
